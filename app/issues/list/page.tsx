@@ -2,9 +2,20 @@ import prisma from "@/prisma/client";
 import { Table } from "@radix-ui/themes";
 import IssuesToolbar from "./IssuesToolbar";
 import { IssueStatusBadge, Link } from "@/app/components";
+import { Status } from "@prisma/client";
+import { createSearchParamsBailoutProxy } from "next/dist/client/components/searchparams-bailout-proxy";
 
-const IssuesPage = async () => {
-  const issues = await prisma.issue.findMany();
+interface Props {
+  searchParams: { status: Status };
+}
+
+const IssuesPage = async ({ searchParams }: Props) => {
+  const issues = await prisma.issue.findMany({
+    where: {
+      status: searchParams.status,
+    },
+  });
+
   return (
     <div>
       <IssuesToolbar />
@@ -29,7 +40,6 @@ const IssuesPage = async () => {
                   <IssueStatusBadge status={issue.status} />
                 </div>
               </Table.Cell>
-
               <Table.Cell className="hidden md:table-cell">
                 <IssueStatusBadge status={issue.status} />
               </Table.Cell>
