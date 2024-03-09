@@ -3,6 +3,7 @@ import IssueSummary from "./IssueSummary";
 import prisma from "@/prisma/client";
 import IssueChart from "./IssueChart";
 import LatestIssues from "./LatestIssues";
+import { Metadata } from "next";
 
 export default async function Home() {
   const open = await prisma.issue.count({ where: { status: "OPEN" } });
@@ -20,3 +21,8 @@ export default async function Home() {
     </Grid>
   );
 }
+export const metadata: Metadata = {
+  title: "Project Colab - Dashboard",
+  description:
+    "View a summary of the latest project issues / freature requests ",
+};

@@ -1,5 +1,5 @@
 import prisma from "@/prisma/client";
-import { Box, Flex, Grid } from "@radix-ui/themes";
+import { Box, DialogDescription, Flex, Grid } from "@radix-ui/themes";
 import { notFound } from "next/navigation";
 import EditIssueButton from "./EditIssueButton";
 import IssueDetails from "./IssueDetails";
@@ -38,5 +38,15 @@ const IssueDetailPage = async ({ params }: Props) => {
     </Grid>
   );
 };
+
+export async function generateMetadata({ params }: Props) {
+  const issue = await prisma.issue.findUnique({
+    where: { id: parseInt(params.id) },
+  });
+  return {
+    title: issue?.title,
+    DialogDescription: "Details of issue " + issue?.id,
+  };
+}
 
 export default IssueDetailPage;

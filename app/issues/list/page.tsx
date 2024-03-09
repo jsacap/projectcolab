@@ -4,6 +4,7 @@ import { Status } from "@prisma/client";
 import IssueTable, { IssueQuery, columnNames } from "./IssueTable";
 import IssuesToolbar from "./IssuesToolbar";
 import { Flex } from "@radix-ui/themes";
+import { Metadata } from "next";
 
 interface Props {
   searchParams: IssueQuery;
@@ -44,4 +45,8 @@ const IssuesPage = async ({ searchParams }: Props) => {
 };
 
 export const dynamic = "force-dynamic";
+export const metadata: Metadata = {
+  title: "Project Colab - Issue List",
+  description: "View the full list of project issues / feature requests",
+};
 export default IssuesPage;
